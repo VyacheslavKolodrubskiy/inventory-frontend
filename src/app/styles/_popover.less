@@ -1,0 +1,34 @@
+.popover-table-settings {
+  .ant-popover-title {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .ant-popover-inner-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .ant-tree-treenode {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .ant-tree-switcher-noop {
+    cursor: grab;
+  }
+  .ant-tree-switcher-noop::before {
+    top: calc(50% + 2px);
+  }
+  .ant-tree-switcher-noop::after {
+    top: calc(50% - 2px);
+  }
+  .ant-tree-switcher-noop::before,
+  .ant-tree-switcher-noop::after {
+    content: "";
+    position: absolute;
+    display: block;
+    height: 2px;
+    width: 10px;
+    left: 15%;
+    border-top: 2px dotted @gray5;
+    transform: translateY(-50%);
+  }
+}

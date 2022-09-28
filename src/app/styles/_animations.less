@@ -1,0 +1,12 @@
+@fade-md: transform @animation-duration-base @ease-out-quint, opacity @animation-duration-base @ease-out-quint;
+
+/* Fade in linear */
+.fade-in-linear-enter-active,
+.fade-in-linear-leave-active {
+  transition: opacity @animation-duration-base linear;
+}
+
+.fade-in-linear-enter-from,
+.fade-in-linear-leave-to {
+  opacity: 0;
+}

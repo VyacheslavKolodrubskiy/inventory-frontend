@@ -1,0 +1,26 @@
+.ant-table {
+  &.ant-table-small,
+  &.ant-table-middle {
+    .ant-table-title,
+    .ant-table-footer,
+    .ant-table-thead > tr > th:first-child,
+    .ant-table-tbody > tr > td:first-child,
+    tfoot > tr > th:first-child,
+    tfoot > tr > td:first-child {
+      padding-left: 16px;
+    }
+  }
+}
+
+.card-table {
+  .ant-card-body {
+    padding: 0;
+  }
+  &__header {
+    padding: @card-head-padding;
+  }
+}
+
+.ant-table-row-striped {
+  background-color: @gray1;
+}

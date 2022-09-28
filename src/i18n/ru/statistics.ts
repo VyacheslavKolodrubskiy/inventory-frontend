@@ -1,0 +1,16 @@
+export default {
+  markedProducts: 'Из них промаркировано',
+  productsInWarehouses: 'ТМЦ по складам',
+  productsTotalAmount: 'Общее количество ТМЦ',
+  productsMarkable: 'ТМЦ подлежащие маркировке',
+  byTidBardcode: 'По наличию TID/Barcode',
+  byMarkableProducts: 'По подлежащим маркировке',
+  byUnit: 'По ед.измерения',
+  withTidBarcode: 'Есть TID/Bardcode',
+  withoutTidBarcode: 'Нет TID/Bardcode',
+  countableProducts: 'Исчисляемые ТМЦ',
+  uncountableProducts: 'Неисчисляемые ТМЦ',
+  latestDocuments: 'Последние документы',
+  commonStatisticsByCounterparty: 'Общая статистика по всем организациям',
+  detailedCounterpartyStatistics: 'Детальная статистика по организации',
+};

@@ -1,0 +1,95 @@
+import type { App } from 'vue';
+import QLink from '@/shared/components/qlib/QLink.vue';
+import QImg from '@/shared/components/qlib/QImg.vue';
+import QDatePicker from '@/shared/components/qlib/QDatePicker.vue';
+import QDateRangePicker from '@/shared/components/qlib/QDateRangePicker.vue';
+import QFileLink from '@/shared/components/qlib/QFileLink.vue';
+import QTable from '@/shared/components/qlib/QTable.vue';
+import QUpload from '@/shared/components/qlib/QUpload.vue';
+import AddLink from '@/shared/components/buttons/AddLink.vue';
+import AddButton from '@/shared/components/buttons/AddButton.vue';
+import EditLink from '@/shared/components/buttons/EditLink.vue';
+import EditButton from '@/shared/components/buttons/EditButton.vue';
+import ResetButton from '@/shared/components/buttons/ResetButton.vue';
+import CancelButton from '@/shared/components/buttons/CancelButton.vue';
+import DeleteButton from '@/shared/components/buttons/DeleteButton.vue';
+import SubmitButton from '@/shared/components/buttons/SubmitButton.vue';
+import CardTable from '@/shared/components/CardTable/CardTable.vue';
+import TableActions from '@/shared/components/table/TableActions.vue';
+import LoadingOverlay from '@/shared/components/LoadingOverlay.vue';
+import QPageHeader from '@/shared/components/qlib/QPageHeader.vue';
+import QDrawer from '@/shared/components/qlib/QDrawer.vue';
+import AppFilter from '@/shared/components/filter/AppFilter.vue';
+import SelectionDropdown from '@/shared/components/buttons/SelectionDropdown.vue';
+import SingleDescription from '@/shared/components/SingleDescription.vue';
+import DocumentTitle from '@/shared/components/DocumentTitle.vue';
+import DocumentCreationInfo from '@/shared/components/DocumentCreationInfo.vue';
+import MarkingStatus from '@/shared/components/MarkingStatus.vue';
+import MarkableStatus from '@/shared/components/MarkableStatus.vue';
+import YesNoRadio from '@/shared/components/YesNoRadio.vue';
+// Selects
+import SelectOption from '@/shared/components/SelectOption.vue';
+import SearchCity from '@/shared/components/form/SearchCity.vue';
+import SelectCountry from '@/shared/components/form/SelectCountry.vue';
+import SearchRegion from '@/shared/components/form/SearchRegion.vue';
+import SearchProductCategory from '@/shared/components/form/SearchProductCategory.vue';
+import SelectUnit from '@/shared/components/form/SelectUnit.vue';
+import SelectUnitType from '@/shared/components/form/SelectUnitType.vue';
+import SelectWarehouse from '@/shared/components/form/SelectWarehouse.vue';
+import SelectWarehousePlace from '@/shared/components/form/SelectWarehousePlace.vue';
+import SelectProduct from '@/shared/components/form/SelectProduct.vue';
+import SelectProductMarkingStatus from '@/shared/components/form/SelectProductMarkingStatus.vue';
+import SelectDocumentStatus from '@/shared/components/form/SelectDocumentStatus.vue';
+import SearchManager from '@/shared/components/form/SearchManager.vue';
+import SelectCounterparty from '@/shared/components/form/SelectCounterparty.vue';
+
+import WarehousePlaceChangeModal from '@/shared/components/modal/WarehousePlaceChangeModal.vue';
+export function registerGlobalComponents(app: App) {
+  // https://youtrack.jetbrains.com/issue/WEB-48239
+  const Vue = app; // For PHPStorm/WebStorm only hack to recognize global components
+
+  Vue.component('QLink', QLink);
+  Vue.component('QImg', QImg);
+  Vue.component('QDatePicker', QDatePicker);
+  Vue.component('QDateRangePicker', QDateRangePicker);
+  Vue.component('QFileLink', QFileLink);
+  Vue.component('QTable', QTable);
+  Vue.component('QUpload', QUpload);
+  Vue.component('QPageHeader', QPageHeader);
+  Vue.component('QDrawer', QDrawer);
+  Vue.component('AddButton', AddButton);
+  Vue.component('AddLink', AddLink);
+  Vue.component('EditButton', EditButton);
+  Vue.component('EditLink', EditLink);
+  Vue.component('CancelButton', CancelButton);
+  Vue.component('DeleteButton', DeleteButton);
+  Vue.component('ResetButton', ResetButton);
+  Vue.component('SubmitButton', SubmitButton);
+  Vue.component('CardTable', CardTable);
+  Vue.component('TableActions', TableActions);
+  Vue.component('LoadingOverlay', LoadingOverlay);
+  Vue.component('AppFilter', AppFilter);
+  Vue.component('SelectionDropdown', SelectionDropdown);
+  Vue.component('SingleDescription', SingleDescription);
+  Vue.component('DocumentTitle', DocumentTitle);
+  Vue.component('DocumentCreationInfo', DocumentCreationInfo);
+  Vue.component('MarkingStatus', MarkingStatus);
+  Vue.component('MarkableStatus', MarkableStatus);
+  Vue.component('YesNoRadio', YesNoRadio);
+  // Selects
+  Vue.component('SelectOption', SelectOption);
+  Vue.component('SearchCity', SearchCity);
+  Vue.component('SearchRegion', SearchRegion);
+  Vue.component('SearchProductCategory', SearchProductCategory);
+  Vue.component('SelectCountry', SelectCountry);
+  Vue.component('SelectUnit', SelectUnit);
+  Vue.component('SelectUnitType', SelectUnitType);
+  Vue.component('SelectWarehouse', SelectWarehouse);
+  Vue.component('SelectWarehousePlace', SelectWarehousePlace);
+  Vue.component('WarehousePlaceChangeModal', WarehousePlaceChangeModal);
+  Vue.component('SelectProduct', SelectProduct);
+  Vue.component('SearchManager', SearchManager);
+  Vue.component('SelectProductMarkingStatus', SelectProductMarkingStatus);
+  Vue.component('SelectDocumentStatus', SelectDocumentStatus);
+  Vue.component('SelectCounterparty', SelectCounterparty);
+}

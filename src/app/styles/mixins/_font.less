@@ -1,0 +1,9 @@
+.font(@name, @filename, @weight, @style) {
+  @font-face {
+    font-family: @name;
+    src: url("@/assets/fonts/@{filename}.woff2") format("woff2");
+    font-weight: @weight;
+    font-style: @style;
+    font-display: swap;
+  }
+}

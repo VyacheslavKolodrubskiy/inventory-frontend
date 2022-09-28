@@ -1,0 +1,266 @@
+<template>
+  <div>
+    <QPageHeader>
+      <template #title>
+        <DocumentTitle
+          v-if="writeOffData"
+          :id="writeOffData.id"
+          :title="writeOffData.title"
+          type="write-off"
+        />
+      </template>
+
+      <ATypographyText type="secondary">
+        {{ $t('common.fromWarehouse') }}
+      </ATypographyText>
+      {{ writeOffData?.fromWarehouse.title }}
+    </QPageHeader>
+
+    <ACard>
+      <WriteOffForm
+        :data-id="dataId"
+        @submit="onSubmitWriteOff"
+        @update-write-off="updateWriteOff"
+      />
+
+      <ADivider>
+        {{ $t('common.productList') }}
+        <ATooltip :title="$t('message.productListAutoSaving')">
+          <ATag class="ml-1" color="green">
+            <SaveOutlined />
+            {{ $t('common.autoSave') }}
+          </ATag>
+        </ATooltip>
+      </ADivider>
+      <div class="flex">
+        <SelectionDropdown
+          class="mr-3"
+          :count="state.selectedRowKeys.length"
+          :disabled="loadingState.isLoading.value"
+        >
+          <AMenuItem @click="confirmRemoveProducts">
+            {{ $t('movement.deleteFromList') }}
+          </AMenuItem>
+        </SelectionDropdown>
+
+        <AppFilter
+          v-model:value="filters.productTitle"
+          class="mb-3"
+          :filters="filters"
+          :placeholder="$t('common.searchBy.name')"
+          @reset="resetFilter"
+          @submit="submitFilter"
+        >
+          <AFormItem :label="$t('common.productCategory')">
+            <SearchProductCategory
+              v-model:value="filters.productCategoryId"
+            />
+          </AFormItem>
+
+          <AFormItem :label="$t('common.warehousePlace')">
+            <SelectWarehousePlace
+              v-model:value="filters.warehousePlaceId"
+              :filters="{ warehouseId }"
+            />
+          </AFormItem>
+
+          <AFormItem :label="$t('common.productMarked')">
+            <YesNoRadio v-model:value="filters.markId" />
+          </AFormItem>
+        </AppFilter>
+      </div>
+
+      <ATable
+        :columns="columns"
+        :data-source="state.products"
+        :loading="loadingState.isLoading.value"
+        :pagination="pagination"
+        row-key="id"
+        :row-selection="{ selectedRowKeys: state.selectedRowKeys, onChange: onSelectChange }"
+        size="small"
+        @change="onChangeTable"
+      >
+        <template #bodyCell="{ column, record, text }">
+          <template v-if="column.dataIndex === 'title'">
+            <div class="flex items-center">
+              <MarkingStatus class="mr-2" :marked="record.isMarked" />
+              <SingleDescription :description="record.category.title">
+                {{ text }}
+              </SingleDescription>
+            </div>
+          </template>
+
+          <template v-else-if="column.dataIndex === 'status'">
+            <ATag :color="record.status.color">
+              {{ $t(record.status.title) }}
+            </ATag>
+          </template>
+
+          <template v-else-if="column.dataIndex === 'amount'">
+            <SingleDescription :description="record.unit.title">
+              {{ text }}
+            </SingleDescription>
+          </template>
+
+          <template v-else-if="column.dataIndex === 'action'">
+            <APopconfirm
+              :cancel-text="$t('common.no')"
+              :ok-text="$t('common.yes')"
+              :title="$t('message.confirmRemoveProduct')"
+              @confirm="removeProducts([record.id])"
+            >
+              <DeleteButton />
+            </APopconfirm>
+          </template>
+        </template>
+      </ATable>
+    </ACard>
+  </div>
+</template>
+
+<script setup lang="ts">
+import type { Nullable, UrlParam } from '@qlt2020/frutils';
+import type { TableProps } from 'ant-design-vue/es/table/Table';
+import type { Key } from 'ant-design-vue/es/vc-table/interface';
+import { WriteOffRepository } from '../write-off.repository';
+import type { WriteOff } from '../write-off.model';
+import type { RemoveWriteOffProductDto, UpdateWriteOffDto, WriteOffProductFilters } from '../write-off.dto';
+import { DocumentStatus, WriteOffType } from '@/shared/enums/status.enum';
+import type { EntityID } from '@/types';
+import { Executor, LoadingType, MessageType } from '@/shared/network/executor';
+import { getPaginationParams, usePagination } from '@/shared/composables/usePagination';
+import { useLoading } from '@/shared/composables/useLoading';
+import { useResettableState } from '@/shared/composables/useResettableState';
+import type { MovementProduct } from '@/shared/models/registry-product.model';
+import WriteOffForm from '@/modules/movement/pages/component/WriteOffForm.vue';
+import { useUserStore } from '@/shared/store/user.store';
+import SearchProductCategory from '@/shared/components/form/SearchProductCategory.vue';
+
+const userStore = useUserStore();
+const route = useRoute();
+const router = useRouter();
+const { t } = useI18n();
+const pagination = usePagination();
+const loadingState = useLoading();
+
+const dataId = computed(() => route.params.writeOffId as string);
+const writeOffData = ref<Nullable<WriteOff>>(null);
+const warehouseId = computed(() => writeOffData.value?.fromWarehouse.id);
+
+const { form: filters, resetForm: resetFilters } = useResettableState(() => ({
+  productTitle: '',
+  productCategoryId: null,
+  warehousePlaceId: null,
+  markId: undefined,
+}));
+
+const state = reactive({
+  products: [] as MovementProduct[],
+  selectedRowKeys: [] as EntityID[],
+});
+
+const columns = [
+  {
+    title: t('common.name'),
+    dataIndex: 'title',
+    width: 250,
+  },
+  {
+    title: t('common.status'),
+    dataIndex: 'status',
+    ellipsis: true,
+  },
+  {
+    title: t('common.amount'),
+    dataIndex: 'amount',
+    ellipsis: true,
+  },
+  {
+    title: t('common.warehousePlace'),
+    dataIndex: ['warehousePlace', 'title'],
+    width: 240,
+    ellipsis: true,
+  },
+  {
+    dataIndex: 'action',
+    width: 50,
+  },
+];
+
+function updateWriteOff(writeOff: WriteOff) {
+  if (writeOff.status.id !== DocumentStatus.Created.id
+  || userStore.current.id !== writeOff.author.id
+  || writeOff.writeOffType.id === WriteOffType.Automatic.id)
+    router.replace({ name: 'Movement.Main' });
+
+  writeOffData.value = writeOff;
+}
+
+function resetFilter() {
+  resetFilters();
+  submitFilter();
+}
+
+function submitFilter() {
+  fetchProducts(dataId.value, { ...getPaginationParams(pagination), ...filters });
+}
+
+const onChangeTable: TableProps['onChange'] = (tablePagination, _tableFilters) => {
+  if (tablePagination.current)
+    pagination.page = tablePagination.current;
+
+  submitFilter();
+};
+
+const onSelectChange = (selectedRowKeys: Key[]) => {
+  state.selectedRowKeys = selectedRowKeys as EntityID[];
+};
+
+function confirmRemoveProducts() {
+  Modal.confirm({
+    title: t('movement.removingProducts'),
+    content: t('message.confirmRemoveProducts'),
+    okText: t('common.yes'),
+    cancelText: t('common.no'),
+    onOk() {
+      removeProducts(state.selectedRowKeys);
+      state.selectedRowKeys = [];
+    },
+  });
+}
+
+function fetchProducts(id: UrlParam, params?: WriteOffProductFilters) {
+  Executor.run({
+    request: WriteOffRepository.fetchProducts(id, params),
+    pagination,
+    loadingState,
+    onResult(data) {
+      state.products = data.list;
+    },
+  });
+}
+
+function onSubmitWriteOff(values: UpdateWriteOffDto) {
+  Executor.run({
+    request: WriteOffRepository.update(dataId.value, values),
+    loadingType: LoadingType.Global,
+    messageType: MessageType.Updated,
+  });
+}
+
+function removeProducts(keys: RemoveWriteOffProductDto) {
+  Executor.run({
+    request: WriteOffRepository.deleteProducts(dataId.value, keys),
+    loadingState,
+    messageType: MessageType.Deleted,
+    onResult() {
+      if (keys.length === 1)
+        state.selectedRowKeys = state.selectedRowKeys.filter(key => key !== keys[0]);
+
+      submitFilter();
+    },
+  });
+}
+
+submitFilter();
+</script>

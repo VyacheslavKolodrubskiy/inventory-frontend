@@ -1,0 +1,257 @@
+.font("SFProText", "SFUIText-Regular", 400, normal);
+.font("SFProText", "SFUIText-Semibold", 500, normal);
+.font("SFProText", "SFUIText-Bold", 700, normal);
+.font("SFProText", "SFUIText-Heavy", 900, normal);
+
+html {
+  &.color-weak {
+    filter: invert(80%);
+  }
+
+  &.gray-mode {
+    filter: grayscale(100%);
+    filter: progid:dximagetransform.microsoft.basicimage(grayscale=1);
+  }
+}
+#app {
+  height: 100%;
+  font-weight: 400;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.app-logo {
+  color: @text-color;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+  .anticon {
+    font-size: 1.2em;
+  }
+  &--light {
+    color: @white
+  }
+}
+
+.page-layout {
+  min-height: 100%;
+}
+
+.page-header {
+  position: relative;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+  transition: width .2s;
+
+  &--fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &--light {
+    background-color: @white;
+
+    .page-header__action {
+      color: @text-color;
+    }
+
+    .page-header__action:hover {
+      background-color: rgb(@black 0.05);
+      color: @text-color;
+    }
+
+    .page-header__action .anticon {
+      color: @gray7;
+    }
+
+    .page-header__user-name {
+      color: @gray7;
+    }
+
+    .page-header__user-subname {
+      color: @gray6;
+    }
+  }
+
+  & > *,
+  .ant-row {
+    height: 100%;
+  }
+  &__logo {
+    display: block;
+    margin-right: 20px;
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 12px;
+    color: @white;
+    transition: background-color 0.3s @ease-in-out;
+    border-radius: 0;
+
+    &:hover {
+      background-color: rgb(@white 0.1);
+      color: @text-color;
+    }
+
+    .anticon {
+      color: @gray3;
+      font-size: 16px;
+    }
+  }
+
+  &__user {
+    min-width: 0;
+    text-align: right;
+    line-height: 1.2;
+  }
+
+  &__user-name {
+    .text-truncate();
+
+    font-weight: 500;
+    color: @gray1;
+  }
+
+  &__user-subname {
+    font-size: 12px;
+    color: @gray5;
+    text-transform: lowercase;
+  }
+  &__user-avatar {
+    flex-shrink: 0;
+    margin-left: 8px;
+    color: @gray7;
+    font-weight: 500;
+  }
+}
+
+.ant-layout-sider--fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  height: 100%;
+  box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
+
+  .scrollbar-thin {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - @layout-header-height);
+    padding-bottom: @layout-header-height;
+  }
+}
+
+.mobile-drawer {
+  .ant-drawer-header {
+    display: none;
+  }
+  .ant-drawer-body {
+    padding: 0;
+  }
+  .ant-layout-sider:not(.ant-layout-sider--fixed) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.auth-layout {
+  min-height: 100%;
+  background: #f0f2f5 url("@/assets/img/atom-bg.svg") no-repeat center;
+
+  &__bar {
+    display: flex;
+    align-items: center;
+    height: @layout-header-height;
+    padding: @layout-header-padding;
+  }
+
+  &__header {
+    text-align: center;
+  }
+
+  &__logo {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.2;
+  }
+
+  &__desc {
+    margin-top: 12px;
+    margin-bottom: 40px;
+    color: @gray6;
+    font-size: 16px;
+  }
+
+  &__content {
+    padding: 32px 0;
+  }
+
+  &__container {
+    margin: 0 auto;
+  }
+}
+
+.chart-card {
+  .ant-card-body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 16px;
+    padding-bottom: 12px;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__footer {
+    padding-top: 8px;
+    border-top: 1px solid @gray3;
+  }
+  &__total {
+    font-size: 40px;
+  }
+  &__title {
+    font-size: 18px;
+  }
+  &__help {
+    margin-top: 4px;
+    font-size: 16px;
+    color: @gray7;
+  }
+  &__subtitle {
+    color: @gray5;
+  }
+  &__body {
+    height: 60px;
+    margin: 10px 0;
+  }
+}
+
+.ant-transfer--size-30-70{
+  .ant-transfer-list:first-child {
+    flex: 1 1 30%;
+  }
+}
+
+.ant-transfer--headerless {
+  .ant-transfer-list-header-selected>span:first-child {
+    display: none;
+  }
+}
+
+
+

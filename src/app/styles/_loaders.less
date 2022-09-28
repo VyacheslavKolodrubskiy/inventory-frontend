@@ -1,0 +1,80 @@
+.loader-jaw {
+  position: relative;
+  margin-left: 8px;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  background: @primary-color;
+  animation-name: pacmanDot;
+  transform: translateX(14px);
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 14px solid @primary-color;
+    border-right-color: transparent;
+    top: -12px;
+    left: -24px;
+  }
+  &, &::before, &::after {
+    animation-duration: .5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  &::before {
+    animation-name: upperJaw
+  }
+  &::after {
+    animation-name: lowerJaw
+  }
+  &--dark {
+    background: @white;
+    animation-name: pacmanDotDark;
+    &::before, &::after {
+      border-color: @white transparent @white @white;
+    }
+  }
+}
+
+
+@keyframes pacmanDot {
+  0%, 50% {
+    background: @primary-color;
+  }
+  51%, 100% {
+    background: none;
+  }
+  0%, 100% {
+    transform: translateX(19px);
+  }
+  50% {
+    transform: translateX(14px);
+  }
+}
+
+@keyframes pacmanDotDark {
+  0%, 50% {
+    background: @white;
+  }
+  51%, 100% {
+    background: none;
+  }
+  0%, 100% {
+    transform: translateX(19px);
+  }
+  50% {
+    transform: translateX(14px);
+  }
+}
+
+@keyframes upperJaw {
+  50% {
+    transform: rotate(50deg) translate(2px, -2px)
+  }
+}
+
+@keyframes lowerJaw {
+  50% {
+    transform: rotate(-50deg) translate(2px, 2px)
+  }
+}

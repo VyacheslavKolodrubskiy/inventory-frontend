@@ -1,0 +1,33 @@
+@scrollbar-bg: #cfd8dc;
+@scrollbar-bg-dark: #001529;
+@scrollbar-thumb-bg: #90a4ae;
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: @scrollbar-thumb-bg @scrollbar-bg;
+  &--dark {
+    scrollbar-color: @scrollbar-bg-dark @scrollbar-bg;
+  }
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: @scrollbar-bg;
+}
+
+.scrollbar-thin--dark::-webkit-scrollbar-track {
+  background: @scrollbar-bg-dark;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: @scrollbar-thumb-bg;
+  border-radius: 6px;
+  border: 3px solid @scrollbar-bg;
+}
+
+.scrollbar-thin--dark::-webkit-scrollbar-thumb {
+  border: 3px solid @scrollbar-bg-dark;
+}

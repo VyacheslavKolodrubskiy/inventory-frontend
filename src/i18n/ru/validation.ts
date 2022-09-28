@@ -1,0 +1,16 @@
+export default {
+  notMatchedPasswords: 'Пароли не совпадают',
+  requiredField: 'Это поле обязательно для заполнения',
+  latinLetters: 'Это поле должно содержать только латинские буквы (a-zА-Z)',
+  phoneLengthMessage: 'Телефон должен состоять из 11 цифр',
+  iinLengthMessage: 'ИИН/БИН должен состоять из 12 цифр',
+  incorrectEmailFormat: 'Неверный формат email',
+  incorrectFileFormat: 'Некорректный формат файла',
+  passwordLengthMessage: 'Длина пароля должна быть более 6 символов',
+  fileSizeLimitExceeded: 'Превышен максимальный размер файла',
+  countFieldGreaterThanZero: 'Значение в поле "Количество" должно быть больше нуля',
+  notEnoughAmountToRelocate: 'Недостаточно ТМЦ для перемещения',
+  notEnoughAmountToWriteOff: 'Недостаточно ТМЦ для списания',
+  nonRecurringWarehouse: 'Нельзя создавать перемещение внутри склада, выберите другой склад',
+  articularLength: 'Длина артикула должна быть более 3 символов и не более 100 символов',
+};
